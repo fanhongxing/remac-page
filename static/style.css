@@ -1,0 +1,347 @@
+/* Minimal paper-style landing page (Nerfies-inspired structure).
+   Keep styling conservative; rely mainly on Bulma for layout. */
+
+:root {
+  --content-max-width: 1100px;
+  --metrics-frame-height: 420px;
+  --metrics-prompt-max-height: 260px;
+}
+
+html, body {
+  height: 100%;
+}
+
+.container.is-max-desktop {
+  max-width: var(--content-max-width);
+}
+
+.hero .title {
+  line-height: 1.15;
+}
+
+/* Paper title: slightly larger like the reference page */
+.paper-title {
+  font-size: 3.1rem;
+  margin-bottom: 0.55rem !important;
+}
+
+/* Authors: light blue + larger font */
+.paper-authors {
+  font-size: 1.28rem;
+  line-height: 1.5;
+  margin-bottom: 0.25rem;
+}
+
+.paper-authors a,
+.paper-authors span {
+  color: rgba(50, 115, 220, 0.75);
+}
+
+.paper-authors a:hover {
+  color: rgba(50, 115, 220, 0.95);
+}
+
+.paper-affiliation {
+  font-size: 1.15rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Footer icon-only links */
+.footer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.35rem;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: #363636;
+}
+
+.footer-icon:hover {
+  color: #000000;
+}
+
+.paper-links a.button {
+  margin: 0.15rem;
+}
+
+.paper-links {
+  margin-top: 0.1rem;
+}
+
+.section-title-spacer {
+  margin-top: 1.2rem;
+  margin-bottom: 6rem;
+}
+
+.paper-links .icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+/* Metrics gallery */
+.metrics-image {
+  padding: 12px;
+  background: #f5f5f5;
+}
+
+.metrics-image img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+
+  object-fit: contain;
+}
+
+/* Metrics triplet layout: keep labels aligned */
+.metrics-triplet__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metrics-block {
+  padding: 0.75rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.metrics-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.metrics-exp {
+  margin: 0;
+}
+
+.teaser {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Teaser: slightly larger within the same frame */
+.teaser.figure {
+  padding: 0;
+}
+
+.teaser.figure img {
+  max-height: 820px;
+  object-fit: contain;
+}
+
+.figure {
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Before/After slider (Nerfies-style interaction, minimal CSS) */
+.ba {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #f5f5f5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ba__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ba__img--overlay {
+  clip-path: inset(0 50% 0 0);
+}
+
+.ba__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  border-left: 3px solid rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+.ba__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+/* Results carousel (Nerfies-like arrows + fade) */
+.results-carousel {
+  position: relative;
+}
+
+.results-carousel__content {
+  transition: transform 260ms ease, opacity 260ms ease;
+  will-change: transform, opacity;
+}
+
+.results-carousel__content.is-slide-out-left {
+  transform: translateX(-12%);
+  opacity: 0;
+}
+
+.results-carousel__content.is-slide-out-right {
+  transform: translateX(12%);
+  opacity: 0;
+}
+
+.results-carousel__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+
+.results-carousel__nav--prev {
+  left: 10px;
+}
+
+.results-carousel__nav--next {
+  right: 10px;
+}
+
+@media (max-width: 768px) {
+  .results-carousel__nav--prev {
+    left: 6px;
+  }
+  .results-carousel__nav--next {
+    right: 6px;
+  }
+}
+
+/* Results pair (side-by-side) */
+.results-pair {
+  margin-top: 6px;
+}
+
+.results-img-wrapper {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Metrics (image-only carousel): keep image display areas consistent */
+.metrics-pair .results-img-wrapper {
+  height: var(--metrics-frame-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.metrics-pair .results-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.results-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: contain;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.metrics-prompt-box {
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 10px;
+  height: var(--metrics-prompt-max-height);
+  overflow: hidden;
+}
+
+.metrics-prompt-label {
+  font-weight: 600;
+  color: #4a4a4a;
+  margin-top: 0.45rem;
+}
+
+.metrics-prompts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.metrics-prompts > div {
+  min-width: 0;
+}
+
+.metrics-prompt-text {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Align labels on the same baseline */
+.metrics-triplet__item .caption {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.caption {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+}
+
+pre {
+  border-radius: 12px;
+  overflow: auto;
+}

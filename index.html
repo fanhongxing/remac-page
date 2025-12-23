@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reasoning-Driven Amodal Completion: A Multi-Agent Framework and Evaluation</title>
+
+  <!-- Bulma (Nerfies-style pages commonly use Bulma) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <!-- Icons (match common Nerfies-style paper pages) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.4/css/academicons.min.css" />
+  <link rel="stylesheet" href="static/style.css?v=20251223-1" />
+</head>
+<body>
+
+  <!-- Header / Title -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <h1 class="title is-2 has-text-centered paper-title">Reasoning-Driven Amodal Completion: A Multi-Agent Framework and Evaluation</h1>
+
+            <div class="content has-text-centered">
+              <p class="paper-authors">
+                <a href="https://scholar.google.com.hk/citations?user=Wnk95ccAAAAJ&hl=en&oi=ao">Hongxing Fan</a>,
+                <span>Shuyu Zhao</span>,
+                <a href="https://jiayangao.github.io/">Jiayang Ao</a>,
+                <a href="https://lucassheng.github.io/">Lu Sheng</a>
+              </p>
+              <p class="paper-affiliation">Beihang University</p>
+            </div>
+
+            <div class="paper-links has-text-centered">
+              <!-- Keep buttons but leave href empty; fill later -->
+              <a class="button is-dark is-rounded" href="#" aria-label="Paper PDF link (empty)">
+                <span class="icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
+                <span>PDF</span>
+              </a>
+              <a class="button is-dark is-rounded" href="#" aria-label="arXiv link (empty)">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64" role="img" focusable="false" aria-hidden="true">
+                    <rect x="6" y="14" width="52" height="36" rx="8" fill="none" stroke="currentColor" stroke-width="4" />
+                    <text x="32" y="38" text-anchor="middle" font-size="18" font-family="Arial, Helvetica, sans-serif" fill="currentColor">arXiv</text>
+                  </svg>
+                </span>
+                <span>arXiv</span>
+              </a>
+              <a class="button is-dark is-rounded" href="#" aria-label="Code link (empty)">
+                <span class="icon" aria-hidden="true"><i class="fab fa-github"></i></span>
+                <span>Code</span>
+              </a>
+              <a class="button is-dark is-rounded" href="#" aria-label="Dataset link (empty)">
+                <span class="icon" aria-hidden="true"><i class="fas fa-database"></i></span>
+                <span>Dataset</span>
+              </a>
+            </div>
+
+            <div class="section-title-spacer"></div>
+
+            <!-- Teaser area (image/video). Placeholder shown. -->
+            <div class="teaser figure">
+              <img src="static/images/teaser.png" alt="Teaser" />
+              <div class="caption">Our framework tackles complex occlusions through these key capabilities: (1) Structural &amp; Semantic Reasoning, which recovers geometric continuity (e.g., hidden limbs) and contextual details (e.g., text) beyond pixel clues; and (2) Diverse Hypothesis Generation, which models the multimodal nature of invisible regions (e.g., diverse plushie states). Furthermore, we introduce (3) the MAC-Score, a human-aligned evaluation metric. As shown in the bottom-right, our metric resolves the paradox where incomplete results are favored by traditional metrics, providing a robust metric for amodal completion.</div>
+            </div>
+
+            <div class="content">
+              <p class="has-text-centered"></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section" id="abstract">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Abstract</h2>
+      <div class="content">
+        <p>
+          Amodal completion, the task of inferring invisible object parts, faces significant challenges in maintaining semantic consistency and structural integrity.
+          Prior progressive approaches are inherently limited by <em>error accumulation</em> and <em>inference instability</em>.
+          To tackle these limitations, we present a Collaborative Multi-Agent Reasoning Framework that explicitly decouples Semantic Planning from Visual Synthesis.
+          By employing specialized agents for upfront reasoning, our method generates a structured, explicit plan before pixel generation, enabling visually and semantically coherent single-pass synthesis.
+          We integrate this framework with two critical mechanisms: (1) a self-correcting Verification Agent that employs Chain-of-Thought reasoning to rectify visible region segmentation and identify residual occluders strictly within the Semantic Planning phase, and (2) a Diverse Hypothesis Generator that addresses the ambiguity of invisible regions by offering diverse, plausible semantic interpretations, surpassing the limited pixel-level variations of standard random seed sampling.
+          Furthermore, addressing the limitations of traditional metrics in assessing inferred invisible content, we introduce the MAC-Score (MLLM Amodal Completion Score), a novel human-aligned evaluation metric.
+          Validated against human judgment and ground truth, these metrics establish a robust standard for assessing structural completeness and consistency with visible context.
+          Extensive experiments demonstrate that our framework significantly outperforms state-of-the-art methods across multiple datasets.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <div class="content">
+        
+      </div>
+      <div class="figure">
+        <img src="static/images/method.png" alt="Method overview" />
+        <div class="caption">Overview of the proposed Closed-Loop Collaborative Multi-Agent Reasoning Framework. The pipeline fundamentally decouples semantic planning from visual synthesis through three coordinated stages: (1) Holistic Collaborative Reasoning: A coalition of agents synergizes to parse the scene’s geometry, forming an initial spatial plan. (2) Closed-Loop Verification: A self-correcting mechanism where a Verification Agent iteratively scrutinizes the initial plan to rectify segmentation errors and recover overlooked occluders. (3) Hypothesis Generation: To address the uncertainty of invisible regions, the Hypothesis Agent leverages the refined context to propose diverse semantic descriptions. Finally, the Inpainting Agent executes the verified plan to synthesize the high-fidelity amodal result in a single pass.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qualitative Results (kept from reference structure) -->
+  <section class="section" id="qualitative-results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Amodal Completion with Guidance</h2>
+      <div class="content">
+        
+      </div>
+      <div class="figure">
+        <img src="static/images/result.png" alt="Qualitative results" />
+        <div class="caption">Qualitative comparison against SOTA amodal completion approaches. We compare with Pix2Gestalt [9], PD-MC [3], and OWAAC [13]. Annotations denote MAC-Consistency scores and MAC-Completeness states (✓/×). Row 2: Baselines leave significant “ghost” artifacts (e.g., yellow blobs), whereas we cleanly recover the texture. Rows 3 &amp; 4 (Structure): Baselines struggle with reasoning. In Row 3, PD-MC hallucinates unnatural object; in Row 4, OWAAC misinterprets the dog’s pose. Our method correctly infers both geometry and posture. Row 6 (Text): Only our method accurately recovers missing semantic text characters. Overall, our superior visual quality aligns with the higher quantitative scores, verifying the rationality of our proposed metrics.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Added: Results Images (Original vs Generated) -->
+  <section class="section" id="results-images">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Results Images</h2>
+      <div class="content">
+        
+      </div>
+
+      <div class="figure results-carousel" aria-label="Results carousel">
+        <button class="button is-light is-rounded results-carousel__nav results-carousel__nav--prev" id="results-prev" type="button" aria-label="Previous example">
+          <span class="icon" aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
+        </button>
+
+        <div class="results-carousel__content" id="results-carousel-content">
+          <div class="grid-2 results-pair" aria-label="Original and generated pair">
+            <div class="figure">
+              <div class="results-img-wrapper">
+                <img id="results-img-original" class="results-img" src="static/images/placeholder.svg" alt="Original image" />
+              </div>
+              <div class="caption has-text-centered">Original</div>
+            </div>
+            <div class="figure">
+              <div class="results-img-wrapper">
+                <img id="results-img-generated" class="results-img" src="static/images/placeholder.svg" alt="Generated image" />
+              </div>
+              <div class="caption has-text-centered">Generated</div>
+            </div>
+          </div>
+          <div class="caption has-text-centered" id="results-pair-caption"></div>
+        </div>
+
+        <button class="button is-light is-rounded results-carousel__nav results-carousel__nav--next" id="results-next" type="button" aria-label="Next example">
+          <span class="icon" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Added: Metrics (examples + detailed scores) -->
+  <section class="section" id="metrics">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Metrics</h2>
+      <div class="content">
+        
+      </div>
+
+      <div class="content" aria-label="Evaluation prompts">
+        <div class="grid-2 metrics-prompts">
+          <div>
+            <div class="metrics-prompt-box">
+              <pre class="metrics-prompt-text" id="metrics-completeness-prompt">You are an expert in visual perception and object recognition.
+
+You will be given **two images**:
+- The **first image** is the original image containing the scene.
+- The **second image** is the **segmented result** of the main object, obtained from an **Amodal Completion** task.
+
+Your task is to determine whether the segmented object (the second image) represents a **complete and intact** version of the object seen in the original image.
+
+Definitions:
+
+- **"Complete"** means that the object is entirely visible within the image frame, not partially cut off, hidden, or distorted. The segmented result should contain the object in its natural, full form as it appears in the real world.
+- **"Incomplete"** means the object is missing parts, truncated at the edges, occluded, or not consistent with the full object that should exist in the original image.
+
+**Important:**
+- Focus on comparing the segmented result (second image) with the original image (first image).  
+  The segmented object should correspond to the same object visible in the original image and should not miss essential parts.
+- If the segmented object appears cut off, has missing limbs or edges, or is inconsistent with the object’s full structure in the original image, it should be classified as **Incomplete**.
+
+Instructions:
+
+1. Carefully compare the segmented object (second image) with the original image (first image).
+2. Determine if the segmented object is **Complete** or **Incomplete**.
+3. Provide your decision in this strict JSON format:
+
+{
+  "object_status": "Complete" | "Incomplete",
+  "explanation": "A short sentence explaining why you made this decision, focusing on missing parts, truncation, or mismatch with the original image."
+}
+
+Note:
+- Only use "Complete" or "Incomplete" as the categories.
+- Focus on whether the segmented result accurately represents the complete form of the object seen in the original image.</pre>
+            </div>
+            <div class="metrics-prompt-label has-text-centered">Completeness Prompt</div>
+          </div>
+
+          <div>
+            <div class="metrics-prompt-box">
+              <pre class="metrics-prompt-text" id="metrics-consistency-prompt">You are an evaluator comparing two images:
+
+The original image, which contains the visible part of the object (partially occluded).
+The completed image, which shows the object after amodal completion.
+
+Amodal completion is the process of inferring and representing an object’s occluded parts so the object is understood as a **complete, closed whole**.
+
+Your task is to rate how consistent and realistic the completed object itself is.
+
+**Critical Definition of "Incomplete":**
+If the completed object still looks cut off, truncated, or has a straight "image border" edge where it should be round or continuous, it is considered **Incomplete**. This is a structural failure.
+
+Evaluation Dimensions:
+
+**1. Structural Continuity (0–4 points)**
+*Focus on the closure and logical continuation of the shape.*
+* **0: The object boundary is abruptly cut off, forming a straight line or unnatural truncation (looks like the original occluded input). The shape is NOT closed.**
+* 1: The object attempts to close the shape but the boundary is severely distorted, jagged, or structurally impossible.
+* 2: Generally continuous but with noticeable misalignment or irregularities in the completed region.
+* 3: Contours flow seamlessly and align well between completed and visible regions.
+* 4: Boundaries are perfectly closed, continuous, and fully consistent with the visible parts.
+
+**2. Semantic Consistency (0–4 points)**
+* 0: The completed region introduces incorrect or unrelated elements.
+* 1: Roughly matches the object but contains major semantic errors (e.g., wrong parts or unrealistic details).
+* 2: Generally consistent but with notable smaller semantic inaccuracies.
+* 3: Mostly consistent, with only very minor or negligible semantic differences.
+* 4: Perfect match to the original object’s type, structure, and expected real-world form.
+
+**3. Object Realism (0–2 points)**
+* 0: The completed object does not resemble a plausible real-world version of the object (e.g., a half-object is not realistic).
+* 1: Somewhat realistic but with small inconsistencies.
+* 2: Perfectly realistic and faithful to how this object should appear in reality.
+
+Scoring:
+Add up the points from all categories.
+score = Structural Continuity + Semantic Consistency + Object Realism
+
+Output Format:
+{
+"score": X,
+"dimension_scores": {
+"structural_continuity": Y,
+"semantic_consistency": Z,
+"object_realism": A
+},
+"explanation": "One or two sentences summarizing why you gave this score."
+}</pre>
+            </div>
+            <div class="metrics-prompt-label has-text-centered">Consistency Prompt</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics Gallery (Generated images + completeness/consistency) -->
+      <div class="content">
+        <div class="figure results-carousel" aria-label="Metrics carousel">
+          <button class="button is-light is-rounded results-carousel__nav results-carousel__nav--prev" id="metrics-prev" type="button" aria-label="Previous metric example">
+            <span class="icon" aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
+          </button>
+
+          <div class="results-carousel__content" id="metrics-carousel-content">
+            <div class="card">
+              <div class="card-image">
+                <div class="grid-2 metrics-pair" aria-label="Original and completed">
+                  <div class="figure metrics-triplet__item" aria-label="Original image">
+                    <div class="results-img-wrapper">
+                      <img id="metrics-img-original" class="results-img" src="static/images/placeholder.svg" alt="Original image for metrics" />
+                    </div>
+                    <div class="caption has-text-centered">Original</div>
+                  </div>
+
+                  <div class="figure metrics-triplet__item" aria-label="Completed image">
+                    <div class="results-img-wrapper">
+                      <img id="metrics-img-completed" class="results-img" src="static/images/placeholder.svg" alt="Completed image for metrics" />
+                    </div>
+                    <div class="caption has-text-centered">Completed</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="is-size-6" id="metrics-caption"></p>
+
+                  <div class="columns is-variable is-4">
+                    <div class="column">
+                      <div class="metrics-block">
+                        <div class="metrics-head">
+                          <strong>Completeness</strong>
+                          <span class="tag is-rounded" id="metrics-completeness-status">--</span>
+                        </div>
+                        <p class="metrics-exp" id="metrics-completeness-exp"><!-- explanation --></p>
+                      </div>
+                    </div>
+                    <div class="column">
+                      <div class="metrics-block">
+                        <div class="metrics-head">
+                          <strong>Consistency</strong>
+                          <span class="tag is-rounded" id="metrics-consistency-score">--</span>
+                        </div>
+                        <p class="metrics-exp" id="metrics-consistency-exp"><!-- explanation --></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <details>
+                    <summary>View detailed scores (JSON)</summary>
+                    <pre><code id="metrics-details">{}</code></pre>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="button is-light is-rounded results-carousel__nav results-carousel__nav--next" id="metrics-next" type="button" aria-label="Next metric example">
+            <span class="icon" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="bibtex">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">BibTeX</h2>
+      <div class="content">
+        <pre><code></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <a class="footer-icon" href="#" aria-label="PDF">
+          <span class="icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
+        </a>
+        <a class="footer-icon" href="#" aria-label="GitHub">
+          <span class="icon" aria-hidden="true"><i class="fab fa-github"></i></span>
+        </a>
+      </p>
+      <p>
+        The website template is borrowed from <a href="https://nerfies.github.io/">Nerfies</a>.
+      </p>
+    </div>
+  </footer>
+
+  <script src="static/results_images.js?v=20251222-2"></script>
+  <script src="static/metrics_gallery.js?v=20251222-16"></script>
+
+</body>
+</html>
