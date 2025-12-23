@@ -1,5 +1,5 @@
 (() => {
-  const CACHE_BUST = '20251222-15';
+  const CACHE_BUST = '20251223-3';
 
   const CONSISTENCY_PROMPT = `You are an evaluator comparing two images:
 
@@ -92,13 +92,12 @@ Note:
   const caption = document.getElementById('metrics-caption');
 
   const completenessStatus = document.getElementById('metrics-completeness-status');
-  const completenessExp = document.getElementById('metrics-completeness-exp');
   const consistencyScore = document.getElementById('metrics-consistency-score');
   const consistencyExp = document.getElementById('metrics-consistency-exp');
 
   const details = document.getElementById('metrics-details');
 
-  if (!prevBtn || !nextBtn || !carouselContent || !imgOriginal || !imgCompleted || !caption || !completenessStatus || !completenessExp || !consistencyScore || !consistencyExp || !details) return;
+  if (!prevBtn || !nextBtn || !carouselContent || !imgOriginal || !imgCompleted || !caption || !completenessStatus || !consistencyScore || !consistencyExp || !details) return;
 
   // Replace with your real results.
   // Put images under paper_web/static/images/ and reference like "static/images/xxx.png".
@@ -111,7 +110,11 @@ Note:
       original: 'static/images/o_m1.png',
       completed: 'static/images/metric1.png',
       caption: '',
-      completeness: { status: 'Complete', explanation: '' },
+      completeness: {
+        status: 'Complete',
+        explanation:
+          'The segmented result accurately represents the full structure of the bench visible in the original image, including its seat, backrest, and legs, without any missing parts or truncation.'
+      },
       consistency: { score: 7, explanation: '' },
       details: {
         score: 7,
@@ -130,7 +133,11 @@ Note:
       original: 'static/images/o_m2.png',
       completed: 'static/images/metric2.png',
       caption: '',
-      completeness: { status: 'Complete', explanation: '' },
+      completeness: {
+        status: 'Complete',
+        explanation:
+          'The segmented kitten includes all visible parts from the original image—head, body, legs, and tail—with no missing limbs or truncation, representing the full form of the kitten as it appears in the scene.'
+      },
       consistency: { score: 9, explanation: '' },
       details: {
         score: 9,
@@ -149,7 +156,11 @@ Note:
       original: 'static/images/o_m3.png',
       completed: 'static/images/metric3.png',
       caption: '',
-      completeness: { status: 'Incomplete', explanation: '' },
+      completeness: {
+        status: 'Incomplete',
+        explanation:
+          'The segmented guitar is missing a large portion of its body and has a jagged, broken appearance, unlike the intact guitar seen being played in the original image. This indicates the segmentation is incomplete and not a full representation of the object.'
+      },
       consistency: { score: 4, explanation: '' },
       details: {
         score: 4,
@@ -192,13 +203,25 @@ Note:
     completenessStatus.textContent = comp;
     completenessStatus.classList.remove('is-success', 'is-danger');
     completenessStatus.classList.add(comp === 'Complete' ? 'is-success' : 'is-danger');
-    completenessExp.textContent = ex.completeness?.explanation || '';
 
     const cons = clampConsistency(ex.consistency?.score);
     consistencyScore.textContent = String(cons);
     consistencyExp.textContent = ex.consistency?.explanation || '';
 
-    details.textContent = JSON.stringify(ex.details ?? {}, null, 2);
+    const completenessDetails = {
+      object_status: comp,
+      explanation: ex.completeness?.explanation || ''
+    };
+    const consistencyDetails = ex.details ?? {};
+
+    details.textContent = JSON.stringify(
+      {
+        completeness: completenessDetails,
+        consistency: consistencyDetails
+      },
+      null,
+      2
+    );
   };
 
   const wrapIndex = (i) => {

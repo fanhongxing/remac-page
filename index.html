@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reasoning-Driven Amodal Completion: A Multi-Agent Framework and Evaluation</title>
+  <title>Reasoning-Driven Amodal Completion: Collaborative Agents and Perceptual Evaluation</title>
 
   <!-- Bulma (Nerfies-style pages commonly use Bulma) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
   <!-- Icons (match common Nerfies-style paper pages) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.4/css/academicons.min.css" />
-  <link rel="stylesheet" href="static/style.css?v=20251223-1" />
+  <link rel="stylesheet" href="static/style.css?v=20251223-5" />
 </head>
 <body>
 
@@ -20,16 +20,23 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column is-10">
-            <h1 class="title is-2 has-text-centered paper-title">Reasoning-Driven Amodal Completion: A Multi-Agent Framework and Evaluation</h1>
+            <h1 class="title is-2 has-text-centered paper-title">Reasoning-Driven Amodal Completion: Collaborative Agents and Perceptual Evaluation</h1>
 
             <div class="content has-text-centered">
               <p class="paper-authors">
-                <a href="https://scholar.google.com.hk/citations?user=Wnk95ccAAAAJ&hl=en&oi=ao">Hongxing Fan</a>,
-                <span>Shuyu Zhao</span>,
-                <a href="https://jiayangao.github.io/">Jiayang Ao</a>,
-                <a href="https://lucassheng.github.io/">Lu Sheng</a>
+                <a href="https://scholar.google.com.hk/citations?user=Wnk95ccAAAAJ&hl=en&oi=ao">Hongxing Fan</a><sup>1</sup>,
+                <span>Shuyu Zhao</span><sup>1</sup>,
+                <a href="https://jiayangao.github.io/">Jiayang Ao</a><sup>2</sup>,
+                <a href="https://lucassheng.github.io/">Lu Sheng</a><sup>1</sup><sup class="author-note" aria-label="Corresponding Author"><i class="fas fa-envelope" aria-hidden="true"></i></sup>
               </p>
-              <p class="paper-affiliation">Beihang University</p>
+              <p class="paper-affiliation">
+                <sup>1</sup>Beihang University
+                &nbsp;&nbsp;
+                <sup>2</sup>The University of Melbourne
+              </p>
+              <p class="paper-author-notes">
+                <span class="author-note"><i class="fas fa-envelope" aria-hidden="true"></i> Corresponding Author</span>
+              </p>
             </div>
 
             <div class="paper-links has-text-centered">
@@ -102,7 +109,7 @@
         
       </div>
       <div class="figure">
-        <img src="static/images/method.png" alt="Method overview" />
+        <img src="static/images/method_web.png" alt="Method overview" />
         <div class="caption">Overview of the proposed Closed-Loop Collaborative Multi-Agent Reasoning Framework. The pipeline fundamentally decouples semantic planning from visual synthesis through three coordinated stages: (1) Holistic Collaborative Reasoning: A coalition of agents synergizes to parse the scene’s geometry, forming an initial spatial plan. (2) Closed-Loop Verification: A self-correcting mechanism where a Verification Agent iteratively scrutinizes the initial plan to rectify segmentation errors and recover overlooked occluders. (3) Hypothesis Generation: To address the uncertainty of invisible regions, the Hypothesis Agent leverages the refined context to propose diverse semantic descriptions. Finally, the Inpainting Agent executes the verified plan to synthesize the high-fidelity amodal result in a single pass.</div>
       </div>
     </div>
@@ -116,7 +123,7 @@
         
       </div>
       <div class="figure">
-        <img src="static/images/result.png" alt="Qualitative results" />
+        <img src="static/images/result_web.png" alt="Qualitative results" />
         <div class="caption">Qualitative comparison against SOTA amodal completion approaches. We compare with Pix2Gestalt [9], PD-MC [3], and OWAAC [13]. Annotations denote MAC-Consistency scores and MAC-Completeness states (✓/×). Row 2: Baselines leave significant “ghost” artifacts (e.g., yellow blobs), whereas we cleanly recover the texture. Rows 3 &amp; 4 (Structure): Baselines struggle with reasoning. In Row 3, PD-MC hallucinates unnatural object; in Row 4, OWAAC misinterprets the dog’s pose. Our method correctly infers both geometry and posture. Row 6 (Text): Only our method accurately recovers missing semantic text characters. Overall, our superior visual quality aligns with the higher quantitative scores, verifying the rationality of our proposed metrics.</div>
       </div>
     </div>
@@ -171,8 +178,10 @@
       <div class="content" aria-label="Evaluation prompts">
         <div class="grid-2 metrics-prompts">
           <div>
-            <div class="metrics-prompt-box">
-              <pre class="metrics-prompt-text" id="metrics-completeness-prompt">You are an expert in visual perception and object recognition.
+            <details class="metrics-prompt-details">
+              <summary>View completeness prompt</summary>
+              <div class="metrics-prompt-box">
+                <pre class="metrics-prompt-text" id="metrics-completeness-prompt">You are an expert in visual perception and object recognition.
 
 You will be given **two images**:
 - The **first image** is the original image containing the scene.
@@ -203,14 +212,16 @@ Instructions:
 
 Note:
 - Only use "Complete" or "Incomplete" as the categories.
-- Focus on whether the segmented result accurately represents the complete form of the object seen in the original image.</pre>
-            </div>
-            <div class="metrics-prompt-label has-text-centered">Completeness Prompt</div>
+-- Focus on whether the segmented result accurately represents the complete form of the object seen in the original image.</pre>
+              </div>
+            </details>
           </div>
 
           <div>
-            <div class="metrics-prompt-box">
-              <pre class="metrics-prompt-text" id="metrics-consistency-prompt">You are an evaluator comparing two images:
+            <details class="metrics-prompt-details">
+              <summary>View consistency prompt</summary>
+              <div class="metrics-prompt-box">
+                <pre class="metrics-prompt-text" id="metrics-consistency-prompt">You are an evaluator comparing two images:
 
 The original image, which contains the visible part of the object (partially occluded).
 The completed image, which shows the object after amodal completion.
@@ -258,8 +269,8 @@ Output Format:
 },
 "explanation": "One or two sentences summarizing why you gave this score."
 }</pre>
-            </div>
-            <div class="metrics-prompt-label has-text-centered">Consistency Prompt</div>
+              </div>
+            </details>
           </div>
         </div>
       </div>
@@ -301,7 +312,6 @@ Output Format:
                           <strong>Completeness</strong>
                           <span class="tag is-rounded" id="metrics-completeness-status">--</span>
                         </div>
-                        <p class="metrics-exp" id="metrics-completeness-exp"><!-- explanation --></p>
                       </div>
                     </div>
                     <div class="column">
@@ -359,7 +369,7 @@ Output Format:
   </footer>
 
   <script src="static/results_images.js?v=20251222-2"></script>
-  <script src="static/metrics_gallery.js?v=20251222-16"></script>
+  <script src="static/metrics_gallery.js?v=20251223-3"></script>
 
 </body>
 </html>

@@ -46,6 +46,15 @@ html, body {
   margin-bottom: 0.35rem;
 }
 
+.paper-author-notes {
+  font-size: 1.05rem;
+  margin-top: 0.1rem;
+}
+
+.paper-authors sup.author-note {
+  margin-left: 0.05rem;
+}
+
 /* Footer icon-only links */
 .footer-icon {
   display: inline-flex;
@@ -129,7 +138,6 @@ html, body {
 }
 
 .teaser.figure img {
-  max-height: 820px;
   object-fit: contain;
 }
 
@@ -298,13 +306,24 @@ html, body {
   border-radius: 8px;
   padding: 10px;
   height: var(--metrics-prompt-max-height);
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .metrics-prompt-label {
   font-weight: 600;
   color: #4a4a4a;
   margin-top: 0.45rem;
+}
+
+.metrics-prompt-details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #4a4a4a;
+}
+
+.metrics-prompt-details[open] > summary {
+  margin-bottom: 0.5rem;
 }
 
 .metrics-prompts {
@@ -320,13 +339,14 @@ html, body {
 
 .metrics-prompt-text {
   margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
+  white-space: pre;
+  word-break: normal;
   font-family: inherit;
   font-size: 0.95rem;
   line-height: 1.35;
-  height: 100%;
-  overflow: auto;
+  display: inline-block;
+  min-width: max-content;
+  overflow: visible;
 }
 
 /* Align labels on the same baseline */
