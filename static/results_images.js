@@ -8,24 +8,19 @@
 
   if (!prevBtn || !nextBtn || !carouselContent || !imgOriginal || !imgGenerated || !caption) return;
 
-  // Replace these with your real figures.
-  // Tip: put images under paper_web/static/images/ and reference like "static/images/xxx.png".
-  const groups = [
-    {
-      id: 'ex1',
-      name: 'Example 1',
-      original: 'static/images/original1.png',
-      generated: 'static/images/result1.png',
+  const IMG_CACHE_BUST = '20251225-2';
+
+  // Results Images carousel: originals 3-12 (matching static/images/original{n}.png and result{n}.png).
+  const groups = Array.from({ length: 10 }, (_, idx) => {
+    const n = idx + 3;
+    return {
+      id: `ex${n}`,
+      name: `Example ${n}`,
+      original: `static/images/original${n}.png?v=${IMG_CACHE_BUST}`,
+      generated: `static/images/result${n}.png?v=${IMG_CACHE_BUST}`,
       caption: ''
-    },
-    {
-      id: 'ex2',
-      name: 'Example 2',
-      original: 'static/images/original2.png',
-      generated: 'static/images/result2.png',
-      caption: ''
-    }
-  ];
+    };
+  });
 
   let activeIndex = 0;
   let isAnimating = false;

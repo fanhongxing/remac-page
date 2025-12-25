@@ -5,6 +5,7 @@
   --content-max-width: 1100px;
   --metrics-frame-height: 420px;
   --metrics-prompt-max-height: 260px;
+  --results-frame-height: 560px;
 }
 
 html, body {
@@ -251,6 +252,24 @@ html, body {
   background: #f5f5f5;
   border-radius: 8px;
   padding: 10px;
+}
+
+/* Results Images carousel: keep images crisp by avoiding forced upscaling */
+#results-carousel-content .results-img-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: var(--results-frame-height) !important;
+  padding: 12px !important;
+  overflow: hidden !important;
+}
+
+#results-carousel-content .results-img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 /* Metrics (image-only carousel): keep image display areas consistent */

@@ -10,7 +10,7 @@
   <!-- Icons (match common Nerfies-style paper pages) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.4/css/academicons.min.css" />
-  <link rel="stylesheet" href="static/style.css?v=20251223-5" />
+  <link rel="stylesheet" href="static/style.css?v=20251225-3" />
 </head>
 <body>
 
@@ -45,7 +45,7 @@
                 <span class="icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
                 <span>PDF</span>
               </a>
-              <a class="button is-dark is-rounded" href="#" aria-label="arXiv link (empty)">
+              <a class="button is-dark is-rounded" href="http://arxiv.org/abs/2512.20936" aria-label="arXiv link">
                 <span class="icon" aria-hidden="true">
                   <svg viewBox="0 0 64 64" role="img" focusable="false" aria-hidden="true">
                     <rect x="6" y="14" width="52" height="36" rx="8" fill="none" stroke="currentColor" stroke-width="4" />
@@ -54,7 +54,7 @@
                 </span>
                 <span>arXiv</span>
               </a>
-              <a class="button is-dark is-rounded" href="#" aria-label="Code link (empty)">
+              <a class="button is-dark is-rounded" href="https://github.com/fanhongxing/ReMAC" aria-label="Code link">
                 <span class="icon" aria-hidden="true"><i class="fab fa-github"></i></span>
                 <span>Code</span>
               </a>
@@ -69,7 +69,7 @@
             <!-- Teaser area (image/video). Placeholder shown. -->
             <div class="teaser figure">
               <img src="static/images/teaser.png" alt="Teaser" />
-              <div class="caption">Our framework tackles complex occlusions through these key capabilities: (1) Structural &amp; Semantic Reasoning, which recovers geometric continuity (e.g., hidden limbs) and contextual details (e.g., text) beyond pixel clues; and (2) Diverse Hypothesis Generation, which models the multimodal nature of invisible regions (e.g., diverse plushie states). Furthermore, we introduce (3) the MAC-Score, a human-aligned evaluation metric. As shown in the bottom-right, our metric resolves the paradox where incomplete results are favored by traditional metrics, providing a robust metric for amodal completion.</div>
+              <div class="caption">Our framework tackles complex occlusions through these key capabilities: (1) <strong>Structural &amp; Semantic Reasoning</strong>, which recovers geometric continuity (e.g., hidden limbs) and contextual details (e.g., text) beyond pixel clues; and (2) <strong>Diverse Hypothesis Generation</strong>, which models the multimodal nature of invisible regions (e.g., diverse plushie states). Furthermore, we introduce (3) the <strong>MAC-Score</strong>, a human-aligned evaluation metric. As shown in the bottom-right, our metric resolves the paradox where incomplete results are favored by traditional metrics, providing a robust metric for amodal completion.</div>
             </div>
 
             <div class="content">
@@ -110,7 +110,7 @@
       </div>
       <div class="figure">
         <img src="static/images/method_web.png" alt="Method overview" />
-        <div class="caption">Overview of the proposed Closed-Loop Collaborative Multi-Agent Reasoning Framework. The pipeline fundamentally decouples semantic planning from visual synthesis through three coordinated stages: (1) Holistic Collaborative Reasoning: A coalition of agents synergizes to parse the scene’s geometry, forming an initial spatial plan. (2) Closed-Loop Verification: A self-correcting mechanism where a Verification Agent iteratively scrutinizes the initial plan to rectify segmentation errors and recover overlooked occluders. (3) Hypothesis Generation: To address the uncertainty of invisible regions, the Hypothesis Agent leverages the refined context to propose diverse semantic descriptions. Finally, the Inpainting Agent executes the verified plan to synthesize the high-fidelity amodal result in a single pass.</div>
+        <div class="caption"><strong>Overview of the proposed Closed-Loop Collaborative Multi-Agent Reasoning Framework.</strong> The pipeline fundamentally decouples semantic planning from visual synthesis through three coordinated stages: (1) <strong>Holistic Collaborative Reasoning</strong>: A coalition of agents synergizes to parse the scene’s geometry, forming an initial spatial plan. (2) <strong>Closed-Loop Verification</strong>: A self-correcting mechanism where a Verification Agent iteratively scrutinizes the initial plan to rectify segmentation errors and recover overlooked occluders. (3) <strong>Hypothesis Generation</strong>: To address the uncertainty of invisible regions, the Hypothesis Agent leverages the refined context to propose diverse semantic descriptions. Finally, the <strong>Inpainting Agent</strong> executes the verified plan to synthesize the high-fidelity amodal result in a single pass.</div>
       </div>
     </div>
   </section>
@@ -124,7 +124,7 @@
       </div>
       <div class="figure">
         <img src="static/images/result_web.png" alt="Qualitative results" />
-        <div class="caption">Qualitative comparison against SOTA amodal completion approaches. We compare with Pix2Gestalt [9], PD-MC [3], and OWAAC [13]. Annotations denote MAC-Consistency scores and MAC-Completeness states (✓/×). Row 2: Baselines leave significant “ghost” artifacts (e.g., yellow blobs), whereas we cleanly recover the texture. Rows 3 &amp; 4 (Structure): Baselines struggle with reasoning. In Row 3, PD-MC hallucinates unnatural object; in Row 4, OWAAC misinterprets the dog’s pose. Our method correctly infers both geometry and posture. Row 6 (Text): Only our method accurately recovers missing semantic text characters. Overall, our superior visual quality aligns with the higher quantitative scores, verifying the rationality of our proposed metrics.</div>
+        <div class="caption"><strong>Qualitative comparison against SOTA amodal completion approaches</strong>. We compare with Pix2Gestalt, PD-MC, and OWAAC. Annotations denote <strong>MAC-Consistency</strong> scores and <strong>MAC-Completeness</strong> states (✓/×). <strong>Row 1 (Anatomy)</strong>: Baselines truncate the tail or hallucinate unrealistic limbs (e.g., OWAAC’s legs), while we recover the natural bird shape. <strong>Row 2 (Texture)</strong>: Baselines leave significant “ghost” artifacts (e.g., yellow blobs), whereas we cleanly recover the texture. <strong>Rows 3 &amp; 4 (Reasoning)</strong>: Baselines struggle with reasoning. In Row 3, PD-MC hallucinates unnatural object; in Row 4, OWAAC misinterprets the dog’s pose. Our method correctly infers both geometry and posture. <strong>Row 5 (Geometry)</strong>: Competitors fail to extrapolate the taxi’s length, resulting in distorted/truncated bodies; ours maintains the taxi’s structural completeness. <strong>Row 6 (Text)</strong>: Only our method accurately recovers missing semantic text characters. Overall, our superior visual quality aligns with the higher quantitative scores, verifying the rationality of our proposed metrics.</div>
       </div>
     </div>
   </section>
@@ -368,8 +368,8 @@ Output Format:
     </div>
   </footer>
 
-  <script src="static/results_images.js?v=20251222-2"></script>
-  <script src="static/metrics_gallery.js?v=20251223-3"></script>
+  <script src="static/results_images.js?v=20251225-2"></script>
+  <script src="static/metrics_gallery.js?v=20251225-2"></script>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 (() => {
-  const CACHE_BUST = '20251223-3';
+  const CACHE_BUST = '20251225-2';
 
   const CONSISTENCY_PROMPT = `You are an evaluator comparing two images:
 
@@ -124,7 +124,7 @@ Note:
           object_realism: 0
         },
         explanation:
-          'The bench is structurally continuous with smooth, natural-looking slats and legs, matching the original shape well. The details like the metal plate and stains are semantically consistent with the original. However, the object realism is 0 because the figure of the girl is completely removed, leaving an empty bench — which is plausible, but since the task is to complete the object (the girl), her absence means the completed object is not realistic or faithful to the original scene. The completion focuses only on the bench, not the girl, which is the primary subject.'
+          "The bench is structurally continuous with smooth, natural-looking slats and legs, matching the original shape well. The details like the metal plate and stains are semantically consistent with the original. However, the object realism is 0 because the figure of the girl is completely removed, leaving an empty bench — which is plausible, but since the task is to complete the object (the girl), her absence means the completed object is not realistic or faithful to the original scene. The completion focuses only on the bench, not the girl, which is the primary subject."
       }
     },
     {
@@ -147,7 +147,7 @@ Note:
           object_realism: 1
         },
         explanation:
-          'The completed kitten shows perfect structural continuity, with a seamless flow from the visible parts to the added tail and hind legs. The fur pattern, color, and posture are semantically consistent with the original kitten. However, the object realism is only 1 because the kitten is isolated against a blank background, lacking context and environmental cues (such as shadow or interaction with the desk), which reduces its perceived plausibility as a real-world scene — though the cat itself looks realistic.'
+          "The completed kitten shows perfect structural continuity, with a seamless flow from the visible parts to the added tail and hind legs. The fur pattern, color, and posture are semantically consistent with the original kitten. However, the object realism is only 1 because the kitten is isolated against a blank background, lacking context and environmental cues (such as shadow or interaction with the desk), which reduces its perceived plausibility as a real-world scene — though the cat itself looks realistic."
       }
     },
     {
@@ -159,7 +159,7 @@ Note:
       completeness: {
         status: 'Incomplete',
         explanation:
-          'The segmented guitar is missing a large portion of its body and has a jagged, broken appearance, unlike the intact guitar seen being played in the original image. This indicates the segmentation is incomplete and not a full representation of the object.'
+          "The segmented guitar is missing a large portion of its body and has a jagged, broken appearance, unlike the intact guitar seen being played in the original image. This indicates the segmentation is incomplete and not a full representation of the object."
       },
       consistency: { score: 4, explanation: '' },
       details: {
@@ -170,8 +170,178 @@ Note:
           object_realism: 0
         },
         explanation:
-          'The guitar has some structural continuity with the neck and headstock extending reasonably from the visible portion, but the body is incomplete and appears broken, with an unnatural, jagged edge where it should be smooth — indicating a failure to close the shape properly. The semantic consistency is decent, as it retains the correct parts (frets, soundhole, headstock) and general appearance of an acoustic guitar. However, the object realism is 0 because the guitar is presented in isolation with no context, and its incomplete, broken form makes it look unrealistic and unfaithful to how a whole acoustic guitar should appear in reality.'
+          "The guitar has some structural continuity with the neck and headstock extending reasonably from the visible portion, but the body is incomplete and appears broken, with an unnatural, jagged edge where it should be smooth — indicating a failure to close the shape properly. The semantic consistency is decent, as it retains the correct parts (frets, soundhole, headstock) and general appearance of an acoustic guitar. However, the object realism is 0 because the guitar is presented in isolation with no context, and its incomplete, broken form makes it look unrealistic and unfaithful to how a whole acoustic guitar should appear in reality."
       }
+    },
+    // Placeholders (4-10): replace the image paths after you prepare your figures.
+    // Suggested filenames under paper_web/static/images/:
+    // - original: o_m{n}.png
+    // - completed: metric{n}.png
+    {
+      id: 'm4',
+      name: 'Example 4',
+      original: 'static/images/o_m4.png',
+      completed: 'static/images/metric4.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m4.png'
+      // TODO: set completed -> 'static/images/metric4.png'
+      completeness: { 
+        status: 'Complete', 
+        explanation: 
+          "The segmented elephant includes all major body parts—head, trunk, ears, legs, and tail—without any truncation or missing sections, accurately representing the full form of the elephant as it would appear in the real world, even though the original image shows only part of the elephant's body."
+      },
+      consistency: { score: 8, explanation: '' },
+      details: {
+        score: 8,
+          dimension_scores: {
+            structural_continuity: 4,
+            semantic_consistency: 4,
+            object_realism: 0
+          },
+          explanation: "The completed elephant shows perfect structural continuity with smooth, seamless contours and a fully closed shape. It is semantically consistent, accurately representing an elephant with correct anatomy and texture. However, the object realism is scored 0 because the completed elephant appears as a cutout with no environmental context or natural lighting, making it look like a digital model rather than a plausible real-world instance."
+      }
+    },
+    {
+      id: 'm5',
+      name: 'Example 5',
+      original: 'static/images/o_m5.png',
+      completed: 'static/images/metric5.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m5.png'
+      // TODO: set completed -> 'static/images/metric5.png'
+      completeness: { 
+        status: 'Complete', 
+        explanation: 
+          "The segmented skateboard includes the full deck, trucks, and all four wheels, matching the visible structure of the skateboard in the original image without any missing or truncated parts." 
+      },
+      consistency: { score: 8, explanation: '' },
+      details: {
+        score: 8,
+          dimension_scores: {
+            structural_continuity: 4,
+            semantic_consistency: 4,
+            object_realism: 0
+          },
+          explanation: "The skateboard's shape is structurally continuous and seamlessly closed, with smooth contours matching the visible parts. Semantically, it accurately represents a skateboard with correct features like grip tape, trucks, and wheels. However, the object realism is low because the skateboard is presented in isolation on a white background, lacking any contextual environment or physical grounding, making it appear unrealistically detached from reality."
+      }
+    },
+    {
+      id: 'm6',
+      name: 'Example 6',
+      original: 'static/images/o_m6.png',
+      completed: 'static/images/metric6.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m6.png'
+      // TODO: set completed -> 'static/images/metric6.png'
+      completeness: {
+        status: 'Incomplete',
+        explanation: "The segmented airplane is missing parts of the fuselage and wings, particularly around the mid-section and near the engines, indicating truncation and incomplete reconstruction compared to the full airplane visible in the original image."
+      },
+      consistency: { score: 7, explanation: '' },
+      details: {
+        score: 7,
+          dimension_scores: {
+            structural_continuity: 3,
+            semantic_consistency: 3,
+            object_realism: 1
+          },
+          explanation: "The completed airplane shows a mostly seamless continuation of the fuselage and tail, with smooth contours that align well with the visible parts, earning a high structural score. The semantic details like windows, livery, and engine placement are largely accurate, though minor distortions and warping are visible, especially near the mid-fuselage. The object is realistic overall, but the completion introduces slight artifacts and an unnatural 'cut' near the wing root, preventing a perfect realism score."
+      }
+    },
+    {
+      id: 'm7',
+      name: 'Example 7',
+      original: 'static/images/o_m7.png',
+      completed: 'static/images/metric7.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m7.png'
+      // TODO: set completed -> 'static/images/metric7.png'
+      completeness: { 
+        status: 'Incomplete', 
+        explanation: 
+          "The segmented object shows only a partial, fragmented portion of the door, missing the top, bottom, and left side, and does not represent the full, intact door visible in the original image."
+      },
+      consistency: { score: 5, explanation: '' },
+      details: {
+          score: 5,
+          dimension_scores: {
+            structural_continuity: 2,
+            semantic_consistency: 3,
+            object_realism: 0
+          },
+          explanation: "The completed door shows a partial, jagged continuation with visible truncation and irregular edges, failing to form a closed, continuous shape (Structural Continuity: 2). The wood grain and general form are consistent with a door (Semantic Consistency: 3), but the object is not realistically completed—it appears as a fragmented, incomplete structure rather than a plausible real-world door (Object Realism: 0)."
+        }
+    },
+    {
+      id: 'm8',
+      name: 'Example 8',
+      original: 'static/images/o_m8.png',
+      completed: 'static/images/metric8.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m8.png'
+      // TODO: set completed -> 'static/images/metric8.png'
+      completeness: { 
+        status: 'Complete', 
+        explanation: 
+          "The segmented object is a full, cylindrical concrete garbage bin with visible text 'Santa Monica' and a circular opening at the top, matching the garbage bin in the original image. It is not truncated or missing any essential parts, and its form is consistent with the object as it appears in the scene." 
+      },
+      consistency: { score: 8, explanation: '' },
+      details: {
+          score: 8,
+          dimension_scores: {
+            structural_continuity: 4,
+            semantic_consistency: 4,
+            object_realism: 0
+          },
+          explanation: "The completed garbage bin shows perfect structural continuity with smooth, closed contours and accurate alignment with the visible portion. It is semantically consistent, correctly representing a cylindrical concrete bin with the 'Santa Monica' text and a small emblem. However, it is not realistic as a standalone object because it is presented in isolation against a white background, lacking environmental context and shadows that would make it appear as a real-world object; thus, object realism is scored 0."
+        }
+    },
+    {
+      id: 'm9',
+      name: 'Example 9',
+      original: 'static/images/o_m9.png',
+      completed: 'static/images/metric9.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m9.png'
+      // TODO: set completed -> 'static/images/metric9.png'
+      completeness: { 
+        status: 'Incomplete', 
+        explanation: 
+          "The segmented object is missing significant portions of the house, including the roof, top part of the structure, and parts of the sides, which are visible in the original image. The segmentation appears truncated and does not represent the full, complete form of the house."
+      },
+      consistency: { score: 3, explanation: '' },
+      details: {
+          score: 3,
+          dimension_scores: {
+            structural_continuity: 2,
+            semantic_consistency: 2,
+            object_realism: 1
+          },
+          explanation: "The completed house shows a reasonable attempt at structural continuity, with the visible parts of the brick facade, windows, and clock faces extended, but the edges remain jagged and disconnected, indicating incomplete closure. Semantic elements like the clock and windows are preserved, but the overall form is fragmented and lacks full realism due to the abrupt, non-continuous boundaries."
+        }
+    },
+    {
+      id: 'm10',
+      name: 'Example 10',
+      original: 'static/images/o_m10.png',
+      completed: 'static/images/metric10.png',
+      caption: '',
+      // TODO: set original -> 'static/images/o_m10.png'
+      // TODO: set completed -> 'static/images/metric10.png'
+      completeness: { status: 'Complete', 
+        explanation: 
+          "The segmented object shows the entire phone, including the screen, keypad, and casing, matching the full form of the phone visible in the original image without any missing parts or truncation."
+      },
+      consistency: { score: 8, explanation: '' },
+      details: {
+          score: 8,
+          dimension_scores: {
+            structural_continuity: 4,
+            semantic_consistency: 4,
+            object_realism: 0
+          },
+          explanation: "The completed phone shows perfect structural continuity and semantic consistency with the original, accurately reconstructing the full shape and details of the Samsung phone. However, the object realism is scored 0 because the completed phone is isolated on a white background with no hand or context, making it appear as a cutout rather than a plausible real-world object in its natural setting."
+        }
     }
   ];
 
